@@ -1,0 +1,30 @@
+[
+  {
+    "Model": "Dummy Classifier",
+    "Accuracy": 0.9251,
+    "Balanced Acc.": 0.5,
+    "Precision": 0.0,
+    "Recall": 0.0,
+    "F1-Score": 0.0,
+    "ROC-AUC": "N/A",
+    "Avg. Precision": "N/A",
+    "TP": 0,
+    "TN": 9712,
+    "FP": 0,
+    "FN": 786
+  },
+  {
+    "Model": "Logistic Regression",
+    "Accuracy": 0.6611,
+    "Balanced Acc.": 0.6151,
+    "Precision": 0.1207,
+    "Recall": 0.5611,
+    "F1-Score": 0.1986,
+    "ROC-AUC": 0.6537,
+    "Avg. Precision": 0.1425,
+    "TP": 441,
+    "TN": 6499,
+    "FP": 3213,
+    "FN": 345
+  }
+]

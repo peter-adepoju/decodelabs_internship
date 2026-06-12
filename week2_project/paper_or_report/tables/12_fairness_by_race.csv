@@ -1,0 +1,6 @@
+race,n_samples,prevalence_%,F1,Recall,Precision,ROC-AUC
+AfricanAmerican,2730,7.4,0.225,0.55,0.142,0.711
+Asian,41,17.1,0.476,0.714,0.357,0.71
+Caucasian,7053,7.2,0.212,0.528,0.133,0.693
+Hispanic,190,7.4,0.2,0.429,0.13,0.663
+Other,104,4.8,0.205,0.8,0.118,0.897

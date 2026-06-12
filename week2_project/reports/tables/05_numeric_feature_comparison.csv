@@ -1,0 +1,13 @@
+Feature,Mean (No Readmit),Mean (Readmit),Difference,MW p-value,Significant (p<0.05)
+time_in_hospital,4.245,4.841,0.595,0.0000,Yes
+num_lab_procedures,42.78,45.755,2.975,0.0000,Yes
+num_procedures,1.407,1.378,-0.029,0.9083,No
+num_medications,15.654,16.903,1.25,0.0000,Yes
+number_diagnoses,7.238,7.655,0.417,0.0000,Yes
+number_inpatient,0.297,0.76,0.463,0.0000,Yes
+number_emergency,0.118,0.211,0.093,0.0000,Yes
+number_outpatient,0.298,0.385,0.087,0.0000,Yes
+total_prior_visits,0.713,1.357,0.644,0.0000,Yes
+n_medications_active,1.184,1.215,0.031,0.0030,Yes
+n_medication_changes,0.261,0.311,0.05,0.0000,Yes
+age_ordinal,6.033,6.324,0.291,0.0000,Yes

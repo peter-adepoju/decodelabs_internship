@@ -1,0 +1,10 @@
+Feature,N_categories,Chi2_stat,p_value,Significant
+diag_1_cat,10,88.5,0.0,Yes
+race,5,29.54,6e-06,Yes
+admission_type_id,8,46.8,0.0,Yes
+primary_diag_is_diabetes,2,2.08,0.149647,No
+A1C_tested,2,18.22,2e-05,Yes
+glucose_tested,2,6.01,0.014215,Yes
+on_diabetes_med,2,45.47,0.0,Yes
+med_changed,2,16.49,4.9e-05,Yes
+had_prior_inpatient,2,1009.69,0.0,Yes

@@ -1,0 +1,3 @@
+gender_label,n_samples,prevalence_%,F1,Recall,Precision,ROC-AUC
+Female,5764,7.4,0.213,0.513,0.135,0.688
+Male,4735,6.9,0.215,0.56,0.133,0.707

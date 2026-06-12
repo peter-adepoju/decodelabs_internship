@@ -1,0 +1,7 @@
+Feature,FN mean,TP mean,Difference
+time_in_hospital,-0.09,0.36,-0.45
+num_lab_procedures,0.0,0.21,-0.21
+num_medications,-0.05,0.27,-0.33
+number_diagnoses,0.06,0.38,-0.32
+n_medication_changes,0.03,0.21,-0.17
+age_ordinal,0.05,0.32,-0.28
