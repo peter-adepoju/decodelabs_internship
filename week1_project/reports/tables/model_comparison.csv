@@ -1,0 +1,5 @@
+,Accuracy,Balanced Acc.,Precision,Recall,F1-Score,ROC-AUC
+Dummy Classifier,0.533,0.5,0.0,0.0,0.0,0.5
+Logistic Regression,0.833,0.83,0.846,0.786,0.815,0.95
+Decision Tree,0.7,0.69,0.75,0.536,0.625,0.745
+Random Forest,0.867,0.864,0.885,0.821,0.852,0.941
