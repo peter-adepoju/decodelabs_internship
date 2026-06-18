@@ -1,4 +1,4 @@
-# E-Commerce Customer Intelligence Report
+# E-Commerce Customer Intelligence
 ## Segmentation, Delivery Performance, and Review Score Prediction using the Olist Dataset
 
 **Authors:** Peter Adepoju \
