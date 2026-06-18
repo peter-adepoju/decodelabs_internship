@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this project, please cite it as below."
+type: software
+title: "FedTB-Nigeria: Federated Learning for Tuberculosis Diagnosis from Chest X-Rays Across Nigerian Teaching Hospitals"
+authors:
+  - family-names: "[Family Name]"
+    given-names: "[Given Name]"
+    affiliation: "[Your University / Institution]"
+    email: "[your@email.edu]"
+version: "0.1.0"
+date-released: "2025-01-01"
+url: "https://github.com/YOUR_USERNAME/fedtb_nigeria"
+license: MIT
+keywords:
+  - federated learning
+  - tuberculosis
+  - chest X-ray
+  - differential privacy
+  - Nigeria
+  - medical imaging
+  - ResNet
+  - Flower
+  - Opacus
+repository-code: "https://github.com/YOUR_USERNAME/fedtb_nigeria"
+abstract: >
+  FedTB-Nigeria implements a privacy-preserving federated learning pipeline
+  for TB detection from chest X-rays, simulating multi-hospital deployment
+  across Nigerian teaching hospitals. The system uses ResNet-18 with FedAvg
+  aggregation and Opacus-based differential privacy, benchmarked against a
+  centralised training baseline.

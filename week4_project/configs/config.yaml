@@ -1,0 +1,200 @@
+# ============================================================
+# FedTB-Nigeria Master Configuration
+# All hyperparameters, paths, and experiment settings
+# Change values here to run different experiments
+# ============================================================
+
+project:
+  name: "fedtb_nigeria"
+  version: "0.1.0"
+  description: "Federated Learning for TB Diagnosis from Chest X-Rays"
+  random_seed: 42
+  device: "cuda"          # "cuda" or "cpu" — auto-falls back to cpu if no GPU
+
+# ---- Data ----
+data:
+  raw_dir: "data/raw"
+  interim_dir: "data/interim"
+  processed_dir: "data/processed"
+  mock_dir: "data/mock"
+  image_size: 224         # Resize all CXRs to 224×224 (ResNet standard)
+  channels: 3             # Convert grayscale to 3-channel (RGB copy)
+
+  # Dataset sources (see notebooks/02 for download instructions)
+  sources:
+    montgomery:
+      name: "Montgomery County CXR"
+      url: "https://openi.nlm.nih.gov/imgs/collections/NLM-MontgomeryCXRSet.zip"
+      expected_size_mb: 115
+      positive_label: 1   # 1 = TB positive
+    shenzhen:
+      name: "Shenzhen Hospital CXR"
+      url: "https://openi.nlm.nih.gov/imgs/collections/ChinaSet_AllFiles.zip"
+      expected_size_mb: 1200
+      positive_label: 1
+    tb_portals:
+      name: "TB Portals (NIH/NIAID)"
+      url: "https://tbportals.niaid.nih.gov/download-data"
+      expected_size_mb: "varies — see notebook 02"
+      positive_label: 1
+
+# ---- Federated Learning Site Simulation ----
+federated:
+  num_clients: 5          # Simulated Nigerian hospital sites
+  # Hospital names (simulated — not real patient data)
+  site_names:
+    - "Lagos_University_Teaching_Hospital"
+    - "Aminu_Kano_Teaching_Hospital"
+    - "University_of_Nigeria_Teaching_Hospital_Enugu"
+    - "Obafemi_Awolowo_University_Teaching_Hospital"
+    - "University_College_Hospital_Ibadan"
+
+  # Data partitioning
+  partition_strategy: "dirichlet"   # "uniform" or "dirichlet" (more realistic)
+  dirichlet_alpha: 0.5              # Lower = more heterogeneous across sites
+  min_samples_per_client: 50
+
+  # FL training
+  num_rounds: 50
+  fraction_fit: 1.0        # Fraction of clients participating each round
+  min_fit_clients: 3
+  min_evaluate_clients: 3
+  min_available_clients: 3
+
+  # FedAvg settings
+  strategy: "FedAvg"
+  server_learning_rate: 1.0   # FedAvg uses weighted averaging, not SGD on server
+
+# ---- Model ----
+model:
+  architecture: "resnet18"
+  pretrained: true          # ImageNet pretrained weights
+  num_classes: 2            # TB positive / TB negative
+  freeze_backbone_epochs: 3 # Freeze backbone for first N epochs (feature extraction)
+  dropout: 0.5
+
+# ---- Local Training (per FL client) ----
+training:
+  epochs_per_round: 3       # Local epochs each client runs per FL round
+  batch_size: 32
+  optimizer: "adam"
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  scheduler: "cosine"
+  warmup_epochs: 1
+  class_weights: "balanced"  # Handle class imbalance
+
+# ---- Centralised Baseline ----
+centralised:
+  epochs: 50
+  batch_size: 32
+  optimizer: "adam"
+  learning_rate: 0.0001
+  weight_decay: 0.0001
+  scheduler: "cosine"
+  early_stopping_patience: 10
+  validation_split: 0.15
+
+# ---- Differential Privacy ----
+differential_privacy:
+  enabled: true
+  target_epsilon: 8.0         # Privacy budget (lower = more private)
+  target_delta: 1.0e-5        # Failure probability
+  max_grad_norm: 1.0          # Gradient clipping norm
+  noise_multiplier: null      # Auto-computed from epsilon/delta if null
+  # Note: Opacus auto-computes the noise multiplier to meet (ε, δ)-DP
+
+  # Experiment: run without DP to measure utility cost
+  run_without_dp: true        # Also train without DP for comparison
+
+# ---- Data Splits ----
+splits:
+  test_size: 0.15
+  val_size: 0.15
+  # train = remaining 70%
+  stratify: true
+  # Time-based split not applicable here (cross-sectional data)
+
+# ---- Augmentation ----
+augmentation:
+  # Applied only to training data
+  random_horizontal_flip: true
+  random_rotation_degrees: 10
+  random_brightness: 0.2
+  random_contrast: 0.2
+  gaussian_blur_prob: 0.1
+  # Medical imaging: be conservative with augmentations
+  # No vertical flips (anatomically invalid for CXR)
+
+  # Normalisation (ImageNet mean/std for pretrained ResNet)
+  normalize_mean: [0.485, 0.456, 0.406]
+  normalize_std: [0.229, 0.224, 0.225]
+
+# ---- Evaluation ----
+evaluation:
+  # Bootstrap for confidence intervals
+  n_bootstrap: 1000
+  bootstrap_ci: 0.95
+
+  # Clinical operating threshold (default: maximise Youden's J)
+  threshold_strategy: "youden"   # or "fixed": 0.5
+
+  # Metrics to report
+  metrics:
+    - "auc_roc"
+    - "auc_prc"
+    - "sensitivity"
+    - "specificity"
+    - "ppv"
+    - "npv"
+    - "f1"
+    - "accuracy"
+    - "balanced_accuracy"
+
+  # Statistical tests
+  statistical_tests:
+    - "mcnemar"          # Compare FL vs centralised
+    - "delong"           # Compare AUC-ROCs
+    - "bootstrap_diff"   # Bootstrap difference in AUCs
+
+# ---- Ablations ----
+ablations:
+  # Number of FL rounds to ablate
+  round_sweep: [5, 10, 20, 50]
+
+  # Number of sites to ablate
+  site_sweep: [2, 3, 5]
+
+  # Privacy budget sweep
+  epsilon_sweep: [1.0, 2.0, 4.0, 8.0, "no_dp"]
+
+  # Data heterogeneity sweep
+  alpha_sweep: [0.1, 0.5, 1.0, "uniform"]
+
+# ---- Paths ----
+paths:
+  models_dir: "models"
+  reports_dir: "reports"
+  paper_dir: "paper_or_report"
+  figures_dir: "reports/figures"
+  tables_dir: "reports/tables"
+  paper_figures_dir: "paper_or_report/figures"
+  paper_tables_dir: "paper_or_report/tables"
+
+  # Saved model filenames
+  centralised_model: "models/centralised/best_model.pth"
+  federated_model: "models/federated/global_model_final.pth"
+
+# ---- Logging ----
+logging:
+  use_mlflow: false         # Set true if MLflow is configured
+  mlflow_tracking_uri: "mlruns/"
+  experiment_name: "fedtb_nigeria"
+  log_every_n_rounds: 5
+
+# ---- Reproducibility ----
+reproducibility:
+  random_seed: 42
+  torch_deterministic: true
+  cudnn_deterministic: true
+  cudnn_benchmark: false    # Set false for reproducibility

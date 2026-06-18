@@ -1,0 +1,281 @@
+Metadata-Version: 2.4
+Name: fedtb_nigeria
+Version: 0.1.0
+Summary: Federated learning for TB diagnosis from chest X-rays across Nigerian teaching hospitals
+License: MIT License
+        
+        Copyright (c) 2025 [Your Name]
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in all
+        copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+        SOFTWARE.
+        
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: license-file
+
+# FedTB-Nigeria: Federated Learning for Tuberculosis Diagnosis from Chest X-Rays Across Nigerian Teaching Hospitals
+
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Target Journal: Nature Medicine](https://img.shields.io/badge/Target-Nature%20Medicine-red.svg)]()
+[![Framework: Flower](https://img.shields.io/badge/FL-Flower%20(flwr)-green.svg)](https://flower.dev/)
+
+---
+
+## Project Summary
+
+**FedTB-Nigeria** is a federated learning research project for tuberculosis (TB) detection from chest X-ray images, designed to simulate a multi-hospital deployment across Nigerian teaching hospitals without sharing raw patient data between sites.
+
+Tuberculosis remains a major public health challenge in Nigeria, which carries one of the highest TB burdens globally. Chest X-ray (CXR) screening using AI offers a scalable diagnostic aid — but centralising sensitive hospital imaging data is ethically problematic, legally constrained, and often logistically infeasible. Federated Learning (FL) allows each hospital to train a local model on its own data, sharing only model gradients (not images) with a central aggregator. Differential Privacy (DP) further protects against gradient-based inference attacks.
+
+This project:
+- Implements FedAvg-based federated learning using the **Flower (flwr)** framework
+- Uses a **ResNet-18** backbone pre-trained on ImageNet, fine-tuned for binary TB classification
+- Applies **differentially private training** (Opacus) at the client level
+- Benchmarks federated models against a **centralised baseline**
+- Evaluates performance rigorously with AUC-ROC, sensitivity, specificity, and bootstrap confidence intervals
+- Targets submission to **Nature Medicine**
+
+---
+
+## Research Question
+
+> Can a differentially-private federated learning system trained across simulated Nigerian teaching hospital sites achieve TB detection performance statistically comparable to a centralised training baseline, while preserving patient privacy and supporting cross-site generalisation?
+
+---
+
+## Hypothesis
+
+A federated ResNet-18 model trained with FedAvg and (ε, δ)-differential privacy will achieve:
+- AUC-ROC ≥ 0.85 on the held-out test set
+- Sensitivity ≥ 0.80 at clinical operating threshold
+- AUC-ROC within 0.05 of the centralised baseline (non-inferiority margin)
+
+*These thresholds are project benchmarks, not fabricated results. Actual values depend on running the full pipeline.*
+
+---
+
+## Datasets
+
+| Dataset | Source | Size | License |
+|---|---|---|---|
+| TB Portals | NIH/NIAID TB Portals Program | ~7,000 CXRs | Public research use |
+| Montgomery County CXR | NIH / Kaggle mirror | 138 CXRs | Public domain |
+| Shenzhen Hospital CXR | NIH / Kaggle mirror | 662 CXRs | Public domain |
+
+> **Note:** The MMAIH (Multi-Modal African Image & Health) dataset was identified as a target dataset. At time of project creation, its full public release was not confirmed. The project uses TB Portals + Montgomery + Shenzhen as the primary open datasets, which collectively represent a diverse African and international TB CXR collection. Download instructions are in `notebooks/02_data_loading_and_first_inspection.ipynb`.
+
+---
+
+## Methods Overview
+
+```
+Multi-site CXRs (simulated Nigerian hospital sites)
+        │
+        ▼
+┌───────────────────────────────────────┐
+│  Per-client local training            │
+│  ResNet-18 + DP-SGD (Opacus)         │
+│  Privacy budget: ε ≤ 8, δ = 1e-5     │
+└───────────────────────────────────────┘
+        │   gradient aggregation (no raw data)
+        ▼
+┌───────────────────────────────────────┐
+│  FedAvg Server (Flower framework)     │
+│  Rounds: 50  │  Min clients: 3        │
+└───────────────────────────────────────┘
+        │
+        ▼
+┌───────────────────────────────────────┐
+│  Global model evaluation              │
+│  AUC, Sensitivity, Specificity        │
+│  Bootstrap CI, McNemar test           │
+└───────────────────────────────────────┘
+        │
+        ▼
+   Centralised baseline comparison
+```
+
+---
+
+## Project Structure
+
+```
+fedtb_nigeria/
+├── README.md
+├── LICENSE
+├── CITATION.cff
+├── requirements.txt
+├── environment.yml
+├── pyproject.toml
+├── Makefile
+├── .gitignore
+├── configs/
+│   └── config.yaml                  # All hyperparameters and paths
+├── data/
+│   ├── raw/                         # Downloaded datasets (not committed to git)
+│   ├── interim/                     # Cleaned / re-indexed
+│   ├── processed/                   # Normalised, split, ready for training
+│   ├── external/                    # Supplementary data
+│   └── mock/                        # Synthetic mini-dataset for tests
+├── notebooks/
+│   ├── 00_project_overview_and_research_question.ipynb
+│   ├── 01_dataset_selection_and_prior_work.ipynb
+│   ├── 02_data_loading_and_first_inspection.ipynb
+│   ├── 03_data_cleaning_and_quality_checks.ipynb
+│   ├── 04_exploratory_data_analysis.ipynb
+│   ├── 05_preprocessing_and_augmentation.ipynb
+│   ├── 06_federated_site_simulation_and_splits.ipynb
+│   ├── 07_centralised_baseline_resnet.ipynb
+│   ├── 08_federated_learning_with_flower.ipynb
+│   ├── 09_differential_privacy_with_opacus.ipynb
+│   ├── 10_federated_dp_combined_training.ipynb
+│   ├── 11_model_evaluation_and_statistical_comparison.ipynb
+│   ├── 12_error_analysis_and_interpretability.ipynb
+│   ├── 13_robustness_checks_and_ablations.ipynb
+│   ├── 14_fairness_bias_and_ethics_checks.ipynb
+│   ├── 15_publication_figures_and_tables.ipynb
+│   ├── 16_final_report_generation.ipynb
+│   └── 17_optional_gradio_demo.ipynb
+├── src/
+│   ├── __init__.py
+│   ├── config.py                    # Config loader
+│   ├── data_utils.py                # Image loading, dataset classes
+│   ├── model.py                     # ResNet-18 builder
+│   ├── fl_client.py                 # Flower client definition
+│   ├── fl_server.py                 # Flower server / strategy
+│   ├── dp_utils.py                  # Opacus DP wrappers
+│   ├── metrics.py                   # AUC, sensitivity, bootstrap CI
+│   ├── visualization.py             # Publication-quality plot helpers
+│   └── paths.py                     # Centralised path management
+├── scripts/
+│   ├── download_data.py             # Automated dataset download
+│   ├── run_centralised.py           # Train centralised baseline
+│   ├── run_federated.py             # Run FL simulation
+│   └── run_all.py                   # End-to-end pipeline
+├── tests/
+│   ├── test_config.py
+│   ├── test_data_utils.py
+│   ├── test_model.py
+│   ├── test_metrics.py
+│   ├── test_fl_client.py
+│   └── test_dp_utils.py
+├── models/
+│   ├── centralised/                 # Saved centralised model weights
+│   └── federated/                   # Saved FL model rounds
+├── reports/
+│   ├── figures/
+│   └── tables/
+├── paper_or_report/
+│   ├── report.md
+│   ├── references.bib
+│   ├── figures/
+│   ├── tables/
+│   ├── model_card.md
+│   ├── datasheet.md
+│   └── limitations.md
+└── app_or_demo/
+    └── gradio_app.py
+```
+
+---
+
+## Quick Start
+
+```bash
+# 1. Clone and enter the project
+git clone https://github.com/YOUR_USERNAME/fedtb_nigeria.git
+cd fedtb_nigeria
+
+# 2. Create the conda environment
+conda env create -f environment.yml
+conda activate fedtb_nigeria
+
+# 3. Download datasets (interactive, asks before large downloads)
+python scripts/download_data.py
+
+# 4. Run tests on mock data
+pytest tests/ -v
+
+# 5. Run the full pipeline (takes several hours with GPU)
+python scripts/run_all.py
+
+# 6. Or open notebooks in order
+jupyter lab notebooks/
+```
+
+---
+
+## Hardware Requirements
+
+| Mode | Hardware | Estimated Time |
+|---|---|---|
+| Mock data only (tests) | CPU only | ~5 minutes |
+| Single-site centralised | GPU (4GB+) | ~2 hours |
+| Full FL simulation (3 sites) | GPU (8GB+) | ~6–12 hours |
+| Full FL + DP (50 rounds) | GPU (8GB+) | ~12–24 hours |
+
+*All notebooks include `USE_MOCK_DATA = True` flags to run quickly on CPU.*
+
+---
+
+## Reproducibility
+
+- All random seeds are fixed (see `configs/config.yaml`)
+- All preprocessing is fit on training data only (no leakage)
+- All train/val/test splits are stratified and site-aware
+- All reported metrics include 95% bootstrap confidence intervals
+
+---
+
+## Ethical Considerations
+
+- No real patient data are included in this repository
+- Datasets used are publicly released for research purposes
+- Differential privacy budgets are reported transparently
+- Fairness analysis across simulated hospital sites is included
+- Limitations of the site-simulation approach are explicitly discussed
+- See `paper_or_report/limitations.md` for full discussion
+
+---
+
+## Citation
+
+If you use this project, please cite:
+
+```
+@software{fedtb_nigeria_2025,
+  author = {[Your Name]},
+  title  = {FedTB-Nigeria: Federated Learning for TB Diagnosis from Chest X-Rays},
+  year   = {2025},
+  url    = {https://github.com/YOUR_USERNAME/fedtb_nigeria}
+}
+```
+
+---
+
+## License
+
+MIT — see `LICENSE`.
+
+---
+
+## Contact
+
+[Your name and institutional email here]
