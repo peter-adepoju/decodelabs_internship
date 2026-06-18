@@ -1,1 +1,1 @@
-# DecodeLabs Internship (May-June, 2026)
+# DecodeLabs Data Science Internship (May-June, 2026)
