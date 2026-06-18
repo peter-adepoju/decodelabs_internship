@@ -1,1 +1,1 @@
-# decodelabs_tasks
+# DecodeLabs Internship (May-June, 2026)
