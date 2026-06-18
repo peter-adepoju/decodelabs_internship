@@ -61,6 +61,11 @@ Hypotheses:
 - Product descriptions and images are unavailable.
 - The data covers a single Brazilian marketplace over a limited time span.
 
+### Data and Models
+
+- Dataset: [Google Drive folder](https://drive.google.com/drive/folders/1ypxJaQ3a3n-kLiqp0ntxAC8pQEraYWV4?usp=sharing)
+- Models: [Google Drive folder](https://drive.google.com/drive/folders/1UOM9GHnlEq0sc-vny0Gz6Ed9OZGf-cNR?usp=sharing)
+
 ---
 
 ## 3. Methods
@@ -180,5 +185,35 @@ make download
 make notebooks
 ```
 
-Random seeds are fixed at 42 throughout. Approximate runtime is 20 to 30 minutes.
+If you prefer conda:
 
+```bash
+conda env create -f environment.yml
+conda activate ecommerce_intel
+```
+
+---
+
+## 8. Project Structure
+
+```text
+week3_project/
+|-- configs/              # Project configuration
+|-- notebooks/            # Ordered analysis notebooks
+|-- paper_or_report/      # Full report sources, figures, and tables
+|-- reports/              # Generated figures and tables
+|-- scripts/              # Download and pipeline scripts
+|-- src/                  # Reusable project code
+|-- tests/                # Automated tests
+|-- website_or_demo/      # Streamlit demo
+|-- requirements.txt
+|-- environment.yml
+|-- Makefile
+`-- README.md
+```
+
+For the full technical write-up, see:
+
+- [Report 1](ecommerce_customer_intelligence_report1.pdf)
+- [Report 2](ecommerce_customer_intelligence_report2.pdf)
+- [Report 3](ecommerce_customer_intelligence_report3.pdf)
