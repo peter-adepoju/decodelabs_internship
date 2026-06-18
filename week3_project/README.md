@@ -110,11 +110,11 @@ Train/test split:
 
 ### 4.1 Exploratory Findings
 
-![Monthly revenue trend](figures/monthly_revenue.png)
+![Monthly revenue trend](paper_or_report/figures/monthly_revenue.png)
 
-![Review distribution](figures/review_distribution.png)
+![Review distribution](paper_or_report/figures/review_distribution.png)
 
-![Delivery delay](figures/delivery_delay_hist.png)
+![Delivery delay](paper_or_report/figures/delivery_delay_hist.png)
 
 Late orders make up 6.66% of the reviewed orders in the delay breakdown table.
 Very late orders average 1.72 stars, compared with 4.32 stars for very early
@@ -122,9 +122,9 @@ deliveries.
 
 ### 4.2 RFM Segmentation
 
-![Segment counts](figures/segment_counts.png)
+![Segment counts](paper_or_report/figures/segment_counts.png)
 
-![RFM scatter](figures/rfm_scatter.png)
+![RFM scatter](paper_or_report/figures/rfm_scatter.png)
 
 | Segment | N customers | Revenue % | Avg Recency | Avg Frequency |
 |---------|-------------|-----------|-------------|---------------|
@@ -135,7 +135,7 @@ deliveries.
 
 ### 4.3 Model Performance
 
-![Model comparison](figures/model_comparison.png)
+![Model comparison](paper_or_report/figures/model_comparison.png)
 
 | Model | Accuracy | Lower 95% CI | Upper 95% CI | Macro F1 |
 |-------|----------|--------------|--------------|----------|
@@ -146,7 +146,7 @@ deliveries.
 
 ### 4.4 Interpretability
 
-![Feature importances](figures/feature_importance_gini.png)
+![Feature importances](paper_or_report/figures/feature_importance_gini.png)
 
 Delivery delay is the clearest driver of low review scores, and model errors
 are not evenly distributed across categories and states.
@@ -217,3 +217,4 @@ For the full technical write-up, see:
 - [Report 1](ecommerce_customer_intelligence_report1.pdf)
 - [Report 2](ecommerce_customer_intelligence_report2.pdf)
 - [Report 3](ecommerce_customer_intelligence_report3.pdf)
+
