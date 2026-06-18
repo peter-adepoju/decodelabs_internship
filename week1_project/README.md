@@ -1,4 +1,4 @@
-# Heart Disease Analysis Report
+# Heart Disease Analysis
 ## Exploratory Data Analysis and Predictive Modeling using the UCI Cleveland Dataset
 
 **Author:** Peter Adepoju \
