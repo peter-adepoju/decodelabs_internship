@@ -1,6 +1,0 @@
-Check,Accuracy
-Full model (baseline),0.5493
-Shuffled-label control,0.5843
-Seed sensitivity (mean),0.6177
-Ablated (delivery_delay_days removed),0.5894
-50% training data,0.6209
