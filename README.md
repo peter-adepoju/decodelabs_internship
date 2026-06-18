@@ -11,10 +11,10 @@ and federated learning for medical imaging.
 
 ## Internship Details
 
-- Organization: Decode Labs
-- Role: Data Science Intern
-- Duration: 25 May 2026 to 25 June 2026
-- Mode: Remote / Virtual
+- **Organization:** Decode Labs
+- **Role:** Data Science Intern
+- **Duration:** 25 May 2026 to 25 June 2026
+- **Mode:** Remote / Virtual
 
 ---
 
@@ -132,7 +132,6 @@ Key ideas practiced:
 - PyTorch
 - Flower
 - Opacus
-- Jupyter Notebook
 
 ---
 
