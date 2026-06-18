@@ -236,9 +236,6 @@ python scripts/build_all_notebooks.py
 jupyter notebook
 ```
 
-Open the notebooks in order, starting from
-[`notebooks/00_project_overview.ipynb`](notebooks/00_project_overview.ipynb).
-
 ---
 
 ## 9. Project Structure
