@@ -1,0 +1,125 @@
+project:
+  name: ecommerce_customer_intelligence
+  version: "0.1.0"
+  description: >
+    Customer segmentation, delivery performance analysis, and review score
+    prediction using the Olist Brazilian E-Commerce public dataset.
+  random_seed: 42
+
+data:
+  raw_dir: "data/raw"
+  interim_dir: "data/interim"
+  processed_dir: "data/processed"
+  external_dir: "data/external"
+  mock_dir: "data/mock"
+
+  olist_files:
+    orders: "olist_orders_dataset.csv"
+    order_items: "olist_order_items_dataset.csv"
+    order_payments: "olist_order_payments_dataset.csv"
+    order_reviews: "olist_order_reviews_dataset.csv"
+    customers: "olist_customers_dataset.csv"
+    products: "olist_products_dataset.csv"
+    sellers: "olist_sellers_dataset.csv"
+    geolocation: "olist_geolocation_dataset.csv"
+    category_translation: "product_category_name_translation.csv"
+
+  master_file: "master.parquet"
+  rfm_file: "rfm_scores.parquet"
+  model_features_file: "model_features.parquet"
+
+preprocessing:
+  date_columns:
+    - order_purchase_timestamp
+    - order_approved_at
+    - order_delivered_carrier_date
+    - order_delivered_customer_date
+    - order_estimated_delivery_date
+  delivered_status: "delivered"
+  min_order_value: 0.01
+  max_delivery_delay_days: 365
+
+rfm:
+  reference_date: null          # null = auto (max purchase date + 1 day)
+  n_clusters: 5
+  n_score_bins: 5
+  segment_labels:
+    "555": "Champions"
+    "554": "Champions"
+    "544": "Champions"
+    "545": "Champions"
+    "454": "Loyal"
+    "455": "Loyal"
+    "445": "Loyal"
+    "444": "Loyal"
+    "355": "Potential Loyalist"
+    "354": "Potential Loyalist"
+    "345": "Potential Loyalist"
+    "344": "Potential Loyalist"
+    "255": "Recent Customer"
+    "254": "Recent Customer"
+    "245": "Recent Customer"
+    "244": "Recent Customer"
+    "155": "Promising"
+    "154": "Promising"
+    "145": "Promising"
+    "144": "Promising"
+    "333": "Need Attention"
+    "322": "Need Attention"
+    "323": "Need Attention"
+    "232": "About to Sleep"
+    "223": "About to Sleep"
+    "222": "About to Sleep"
+    "111": "Lost"
+    "112": "Lost"
+    "121": "Lost"
+    "122": "Lost"
+
+modeling:
+  test_size: 0.20
+  val_size: 0.10
+  time_split_date: "2018-01-01"   # orders before this = train, after = test
+  review_score_target: "review_score"
+  late_delivery_target: "is_late"
+
+  feature_cols_review:
+    - delivery_delay_days
+    - order_value
+    - freight_value
+    - freight_ratio
+    - n_items
+    - product_weight_g
+    - product_photos_qty
+    - purchase_month
+    - purchase_dayofweek
+    - customer_state_encoded
+    - product_category_encoded
+    - payment_type_encoded
+
+  feature_cols_late:
+    - order_value
+    - freight_value
+    - freight_ratio
+    - n_items
+    - product_weight_g
+    - purchase_month
+    - purchase_dayofweek
+    - seller_state_encoded
+    - customer_state_encoded
+    - product_category_encoded
+
+  n_bootstrap: 1000
+  n_permutations: 100
+
+figures:
+  dpi: 150
+  format: "png"
+  reports_dir: "reports/figures"
+  paper_dir: "paper_or_report/figures"
+
+tables:
+  reports_dir: "reports/tables"
+  paper_dir: "paper_or_report/tables"
+
+models:
+  save_dir: "models"

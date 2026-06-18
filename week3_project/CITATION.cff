@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this project in your research, please cite it as below."
+authors:
+  - family-names: "[Your Last Name]"
+    given-names: "[Your First Name]"
+    email: "your.email@example.com"
+title: "E-Commerce Customer Intelligence: Segmentation, Delivery Performance,
+  and Review Score Prediction using the Olist Dataset"
+version: "0.1.0"
+date-released: "2024-01-01"
+url: "https://github.com/yourusername/ecommerce_customer_intelligence"
+license: MIT
+
+references:
+  - type: dataset
+    authors:
+      - name: "Olist"
+    title: "Brazilian E-Commerce Public Dataset by Olist"
+    year: 2018
+    url: "https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce"
+    license: "CC BY-NC-SA 4.0"
