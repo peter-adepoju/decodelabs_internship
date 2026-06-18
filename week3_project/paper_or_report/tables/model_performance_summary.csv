@@ -1,0 +1,6 @@
+Task,Model,Accuracy,Macro_F1
+Review Score (5-class),Dummy (baseline),0.5933,N/A
+Review Score (5-class),Logistic Regression,0.3065,N/A
+Review Score (5-class),Random Forest,0.5493,0.2924
+Review Score (5-class),XGBoost,0.6238,0.2551
+Late Delivery (binary),Random Forest,0.9226,0.4799
