@@ -91,6 +91,9 @@ The report is organised around three practical questions:
 
 ### Data and Report Assets
 
+- Dataset: [Google Drive folder](https://drive.google.com/drive/folders/1ls15Nr6Qk-s24xus3267OMPzMIW8mWIc?usp=sharing)
+- Models: [Google Drive folder](https://drive.google.com/drive/folders/1hhn54GzjOyQGQ15wcDp3pELxz5PPi88F?usp=sharing)
+  
 - [Full report PDF 1](fedtb_nigeria_latex_report1.pdf)
 - [Full report PDF 2](fedtb_nigeria_latex_report2.pdf)
 - [Full report PDF 3](fedtb_nigeria_latex_report3.pdf)
