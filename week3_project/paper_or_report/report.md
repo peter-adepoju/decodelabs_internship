@@ -1,10 +1,8 @@
 # E-Commerce Customer Intelligence Report
 ## Segmentation, Delivery Performance, and Review Score Prediction using the Olist Dataset
 
-**Authors:** [Your Name]
-**Institution:** [Your Institution]
-**Date:** [Run date]
-**Version:** 0.1
+**Authors:** [Peter Adepoju]
+**Email:** [petera@aims.ac.za]
 
 ---
 
