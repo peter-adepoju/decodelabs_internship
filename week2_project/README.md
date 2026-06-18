@@ -255,9 +255,3 @@ week2_project/
 |-- requirements.txt
 `-- README.md
 ```
-
-For the full technical write-up, see:
-
-- [Report](paper_or_report/report.md) and the accompanying part 1-3 PDF reports in the project root
-- [Model Card](paper_or_report/model_card.md)
-- [Limitations](paper_or_report/limitations.md)
