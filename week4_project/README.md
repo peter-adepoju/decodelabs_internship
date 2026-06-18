@@ -3,7 +3,6 @@
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Framework: Flower](https://img.shields.io/badge/FL-Flower%20(flwr)-green.svg)](https://flower.dev/)
-[![Target Journal: Nature Medicine](https://img.shields.io/badge/Target-Nature%20Medicine-red.svg)]()
 
 ---
 
@@ -92,11 +91,11 @@ The report is organised around three practical questions:
 
 ### Data and Report Assets
 
-- [Full report PDF 1](/C:/Users/Peter/Documents/projects/READY!/week4_project/fedtb_nigeria_latex_report1.pdf)
-- [Full report PDF 2](/C:/Users/Peter/Documents/projects/READY!/week4_project/fedtb_nigeria_latex_report2.pdf)
-- [Full report PDF 3](/C:/Users/Peter/Documents/projects/READY!/week4_project/fedtb_nigeria_latex_report3.pdf)
-- [Full report PDF 4](/C:/Users/Peter/Documents/projects/READY!/week4_project/fedtb_nigeria_latex_report4.pdf)
-- [Appendix](/C:/Users/Peter/Documents/projects/READY!/week4_project/fedtb_nigeria_latex_report_appendix.pdf)
+- [Full report PDF 1](fedtb_nigeria_latex_report1.pdf)
+- [Full report PDF 2](fedtb_nigeria_latex_report2.pdf)
+- [Full report PDF 3](fedtb_nigeria_latex_report3.pdf)
+- [Full report PDF 4](fedtb_nigeria_latex_report4.pdf)
+- [Appendix](fedtb_nigeria_latex_report_appendix.pdf)
 
 ---
 
@@ -142,9 +141,9 @@ The report is organised around three practical questions:
 
 ### 4.1 Exploratory Findings
 
-![Class distribution](/C:/Users/Peter/Documents/projects/READY!/week4_project/paper_or_report/figures/class_distribution.png)
+![Class distribution](paper_or_report/figures/class_distribution.png)
 
-![Pixel intensity distributions](/C:/Users/Peter/Documents/projects/READY!/week4_project/paper_or_report/figures/pixel_intensity_distributions.png)
+![Pixel intensity distributions](paper_or_report/figures/pixel_intensity_distributions.png)
 
 - The dataset is close to balanced, with a TB-positive rate of 49.2%.
 - Mean pixel intensity differs slightly by label, which the report flags as a
@@ -152,9 +151,9 @@ The report is organised around three practical questions:
 
 ### 4.2 Core Performance Comparison
 
-![ROC and PRC comparison](/C:/Users/Peter/Documents/projects/READY!/week4_project/paper_or_report/figures/fig1_roc_prc.png)
+![ROC and PRC comparison](paper_or_report/figures/fig1_roc_prc.png)
 
-![Confusion matrices](/C:/Users/Peter/Documents/projects/READY!/week4_project/paper_or_report/figures/fig3_confusion_matrices.png)
+![Confusion matrices](paper_or_report/figures/fig3_confusion_matrices.png)
 
 | Model | AUC-ROC | Sensitivity | Specificity | F1 | Balanced Accuracy |
 |---|---:|---:|---:|---:|---:|
@@ -174,9 +173,9 @@ The report is organised around three practical questions:
 
 ### 4.4 Error Analysis and Interpretability
 
-![Error analysis examples](/C:/Users/Peter/Documents/projects/READY!/week4_project/paper_or_report/figures/error_analysis_examples.png)
+![Error analysis examples](paper_or_report/figures/error_analysis_examples.png)
 
-![GradCAM examples](/C:/Users/Peter/Documents/projects/READY!/week4_project/paper_or_report/figures/gradcam_examples.png)
+![GradCAM examples](paper_or_report/figures/gradcam_examples.png)
 
 - False negatives are the most clinically important errors because they miss
   TB cases.
@@ -187,7 +186,7 @@ The report is organised around three practical questions:
 
 ### 4.5 Privacy-Utility Trade-off
 
-![FL + DP training curves](/C:/Users/Peter/Documents/projects/READY!/week4_project/paper_or_report/figures/fl_dp_training_curves.png)
+![FL + DP training curves](paper_or_report/figures/fl_dp_training_curves.png)
 
 The report's DP analysis shows that stronger privacy generally reduces utility.
 The final combined FL+DP model does not match the centralised baseline.
@@ -222,9 +221,9 @@ Recommended next steps:
   safeguard.
 
 See also:
-- [Limitations note](/C:/Users/Peter/Documents/projects/READY!/week4_project/paper_or_report/limitations.md)
-- [Model card](/C:/Users/Peter/Documents/projects/READY!/week4_project/paper_or_report/model_card.md)
-- [Datasheet](/C:/Users/Peter/Documents/projects/READY!/week4_project/paper_or_report/datasheet.md)
+- [Limitations note](paper_or_report/limitations.md)
+- [Model card](paper_or_report/model_card.md)
+- [Datasheet](paper_or_report/datasheet.md)
 
 ---
 
@@ -269,12 +268,12 @@ week4_project/
 
 The main publication figures used in the report are stored here:
 
-- [Figure 1: ROC and PRC comparison](/C:/Users/Peter/Documents/projects/READY!/week4_project/paper_or_report/figures/fig1_roc_prc.png)
-- [Figure 2: Privacy-utility trade-off](/C:/Users/Peter/Documents/projects/READY!/week4_project/paper_or_report/figures/fl_dp_training_curves.png)
-- [Figure 3: Confusion matrices](/C:/Users/Peter/Documents/projects/READY!/week4_project/paper_or_report/figures/fig3_confusion_matrices.png)
-- [Class distribution](/C:/Users/Peter/Documents/projects/READY!/week4_project/paper_or_report/figures/class_distribution.png)
-- [Pixel intensity distributions](/C:/Users/Peter/Documents/projects/READY!/week4_project/paper_or_report/figures/pixel_intensity_distributions.png)
-- [Error analysis examples](/C:/Users/Peter/Documents/projects/READY!/week4_project/paper_or_report/figures/error_analysis_examples.png)
-- [GradCAM examples](/C:/Users/Peter/Documents/projects/READY!/week4_project/paper_or_report/figures/gradcam_examples.png)
+- [Figure 1: ROC and PRC comparison](paper_or_report/figures/fig1_roc_prc.png)
+- [Figure 2: Privacy-utility trade-off](paper_or_report/figures/fl_dp_training_curves.png)
+- [Figure 3: Confusion matrices](paper_or_report/figures/fig3_confusion_matrices.png)
+- [Class distribution](paper_or_report/figures/class_distribution.png)
+- [Pixel intensity distributions](paper_or_report/figures/pixel_intensity_distributions.png)
+- [Error analysis examples](paper_or_report/figures/error_analysis_examples.png)
+- [GradCAM examples](paper_or_report/figures/gradcam_examples.png)
 
 For the full technical write-up, see the PDF reports listed above.
