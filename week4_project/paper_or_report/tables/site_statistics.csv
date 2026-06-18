@@ -1,0 +1,6 @@
+site_id,site_name,n_total,n_positive,n_negative,positive_rate
+0,Lagos_University_Teaching_Hospital,277,143,134,51.62
+1,Aminu_Kano_Teaching_Hospital,82,39,43,47.56
+2,University_of_Nigeria_Teaching_Hospital_Enugu,60,0,60,0.0
+3,Obafemi_Awolowo_University_Teaching_Hospital,88,68,20,77.27
+4,University_College_Hospital_Ibadan,53,26,27,49.06

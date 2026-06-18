@@ -1,0 +1,12 @@
+\begin{table}
+\caption{Statistical comparison: Centralised vs Federated+DP.}
+\label{tab:stats}
+\begin{tabular}{lrrrrl}
+\toprule
+test & statistic & p_value & ci_lower & ci_upper & interpretation \\
+\midrule
+McNemar & 6.243902 & 0.012462 & NaN & NaN & Significant difference in errors (p < 0.05). \\
+Bootstrap ΔAUC & 0.164212 & 0.508000 & 0.075538 & 0.253757 & ΔAUC = 0.1642 (95% CI: 0.0755–0.2538) \\
+\bottomrule
+\end{tabular}
+\end{table}

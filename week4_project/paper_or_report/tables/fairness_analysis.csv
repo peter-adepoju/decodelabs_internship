@@ -1,0 +1,6 @@
+site,n_samples,n_positive,auc,sensitivity,specificity
+Lagos University Teaching Hosp,23,14,0.9524,1.0,0.8889
+Aminu Kano Teaching Hospital,17,6,0.9091,0.8333,0.8182
+University of Nigeria Teaching,27,15,0.8556,0.8,0.8333
+Obafemi Awolowo University Tea,32,15,0.8392,0.6667,0.8235
+University College Hospital Ib,21,9,0.9352,0.7778,0.9167

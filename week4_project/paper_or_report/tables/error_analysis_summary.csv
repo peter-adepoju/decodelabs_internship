@@ -1,0 +1,5 @@
+outcome,count,mean_prob,clinical_risk
+TP,48,0.68332833,Correct catch
+TN,52,0.08233554,Correct clearance
+FN,11,0.098300405,HIGH: Missed TB
+FP,9,0.39308667,Unnecessary follow-up

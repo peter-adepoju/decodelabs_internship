@@ -1,0 +1,22 @@
+Model,Metric,Estimate,CI Lower,CI Upper,95% CI
+Centralised,AUC-ROC,0.8939,0.8333,0.9432,0.833–0.943
+Centralised,AUC-PRC,0.9113,0.8554,0.9536,0.855–0.954
+Centralised,Sensitivity,0.8136,0.7167,0.9033,0.717–0.903
+Centralised,Specificity,0.8525,0.7592,0.931,0.759–0.931
+Centralised,PPV,0.8421,0.7447,0.9299,0.745–0.930
+Centralised,F1,0.8276,0.75,0.8909,0.750–0.891
+Centralised,Balanced Accuracy,0.833,0.7663,0.8927,0.766–0.893
+Federated (No DP),AUC-ROC,0.9086,0.8529,0.9527,0.853–0.953
+Federated (No DP),AUC-PRC,0.9164,0.8577,0.9598,0.858–0.960
+Federated (No DP),Sensitivity,0.7627,0.6491,0.8621,0.649–0.862
+Federated (No DP),Specificity,0.918,0.8437,0.9828,0.844–0.983
+Federated (No DP),PPV,0.9,0.8085,0.9787,0.808–0.979
+Federated (No DP),F1,0.8257,0.7402,0.8906,0.740–0.891
+Federated (No DP),Balanced Accuracy,0.8404,0.7723,0.8979,0.772–0.898
+Federated + DP,AUC-ROC,0.7296,0.6415,0.8148,0.642–0.815
+Federated + DP,AUC-PRC,0.7279,0.615,0.8483,0.615–0.848
+Federated + DP,Sensitivity,0.7627,0.6522,0.8622,0.652–0.862
+Federated + DP,Specificity,0.623,0.4998,0.7414,0.500–0.741
+Federated + DP,PPV,0.6618,0.5535,0.7671,0.554–0.767
+Federated + DP,F1,0.7087,0.6168,0.7934,0.617–0.793
+Federated + DP,Balanced Accuracy,0.6928,0.6109,0.7734,0.611–0.773

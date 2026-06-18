@@ -1,0 +1,8 @@
+dimension,risk_level,notes
+Dataset representativeness,High,Non-Nigerian source data; limited generalisability
+Site simulation fidelity,High,Dirichlet partition is a mathematical proxy for real hospital variation
+Label quality,Medium,Radiologist labels may have inter-rater variability
+Spurious correlations,Medium,Pixel intensity differences between classes noted in EDA
+Demographic metadata,High,No age/sex/HIV status available for subgroup analysis
+Deployment safety,High,False negatives could delay TB treatment
+Privacy guarantee strength,Medium,epsilon=8 is a reasonable but not conservative privacy budget
