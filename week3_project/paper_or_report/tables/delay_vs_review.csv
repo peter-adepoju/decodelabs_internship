@@ -1,0 +1,7 @@
+delay_bucket,num_orders,avg_review_score,std_review_score
+Very early (< -7d),70929,4.317,1.138
+Early (-7 to -1d),17234,4.2,1.182
+On time (0d),1280,4.034,1.252
+Late (1-7d),3600,2.715,1.66
+Late (8-14d),1446,1.671,1.212
+Very late (>14d),1335,1.723,1.252
