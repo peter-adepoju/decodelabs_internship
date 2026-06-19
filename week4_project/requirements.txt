@@ -27,6 +27,7 @@ opacus>=1.4        # Facebook/Meta DP-SGD for PyTorch
 mlflow>=2.8
 
 # --- Notebook and interactive ---
+gradio>=4.0
 jupyter>=1.0
 jupyterlab>=4.0
 ipywidgets>=8.0
