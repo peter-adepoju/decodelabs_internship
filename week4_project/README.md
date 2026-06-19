@@ -122,34 +122,7 @@ A federated ResNet-18 model trained with FedAvg and (ε, δ)-differential privac
 
 ## 3. Methods
 
-### 3.1 Overview
-
-Multi-site CXRs (simulated Nigerian hospital sites)
-        │
-        ▼
-┌───────────────────────────────────────┐
-│  Per-client local training            │
-│  ResNet-18 + DP-SGD (Opacus)         │
-│  Privacy budget: ε ≤ 8, δ = 1e-5     │
-└───────────────────────────────────────┘
-        │   gradient aggregation (no raw data)
-        ▼
-┌───────────────────────────────────────┐
-│  FedAvg Server (Flower framework)     │
-│  Rounds: 50  │  Min clients: 3        │
-└───────────────────────────────────────┘
-        │
-        ▼
-┌───────────────────────────────────────┐
-│  Global model evaluation              │
-│  AUC, Sensitivity, Specificity        │
-│  Bootstrap CI, McNemar test           │
-└───────────────────────────────────────┘
-        │
-        ▼
-   Centralised baseline comparison
-
-### 3.2 Data Preparation
+### 3.1 Data Preparation
 
 - Cleaned the dataset to 800 usable images.
 - Resized all images to 224 x 224.
@@ -157,20 +130,20 @@ Multi-site CXRs (simulated Nigerian hospital sites)
 - Applied standard normalisation and augmentation.
 - Split the data into train, validation, and test sets with a held-out test set.
 
-### 3.3 Federated Learning
+### 3.2 Federated Learning
 
 - Framework: Flower
 - Strategy: FedAvg
 - Site setup: 5 simulated teaching hospitals
 - Backbone: ImageNet-pretrained ResNet-18
 
-### 3.4 Differential Privacy
+### 3.3 Differential Privacy
 
 - Library: Opacus
 - Privacy target in the report: (epsilon = 8, delta = 1e-5)
 - BatchNorm layers were replaced with GroupNorm for DP compatibility
 
-### 3.5 Evaluation
+### 3.4 Evaluation
 
 - AUC-ROC
 - AUC-PRC
