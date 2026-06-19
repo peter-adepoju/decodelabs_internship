@@ -32,14 +32,21 @@ All code, figures, tables, and report sources are in this repository.
 
 ---
 
-## Run The App
+## Hugging Face Space Demo
 
-The demo is a small Gradio app for uploading a chest X-ray and viewing the
-model output.
+This repository includes a public-facing Gradio demo for the FedTB-Nigeria research prototype.
+
+- App entrypoint: `app.py`
+- Gradio demo module: `app_or_demo/gradio_app.py`
+- Model weights: `models/centralised/best_model.pth`
+
+**Important:** This is a research prototype only. It is not clinically validated and must not be used for diagnosis or treatment decisions.
+
+To run locally:
 
 ```bash
-pip install gradio
-python app_or_demo/gradio_app.py
+pip install -r requirements.txt
+python app.py
 ```
 
 Notes:
@@ -53,22 +60,33 @@ Notes:
 
 ## 1. Introduction
 
-Tuberculosis remains a major public health challenge, and chest X-rays can
-support faster screening when radiology expertise is limited. However, medical
-imaging data are difficult to centralise across hospitals because of privacy,
-ethics, and logistics.
+**FedTB-Nigeria** is a federated learning research project for tuberculosis (TB) detection from chest X-ray images, designed to simulate a multi-hospital deployment across Nigerian teaching hospitals without sharing raw patient data between sites.
 
-This project asks:
+Tuberculosis remains a major public health challenge in Nigeria, which carries one of the highest TB burdens globally. Chest X-ray (CXR) screening using AI offers a scalable diagnostic aid — but centralising sensitive hospital imaging data is ethically problematic, legally constrained, and often logistically infeasible. Federated Learning (FL) allows each hospital to train a local model on its own data, sharing only model gradients (not images) with a central aggregator. Differential Privacy (DP) further protects against gradient-based inference attacks.
 
-1. Can chest X-ray data from multiple sites be combined with federated learning
-   without sharing raw patient images?
-2. How much performance is lost when differential privacy is added?
-3. Which failure modes matter most for TB screening?
+This project:
+- Implements FedAvg-based federated learning using the **Flower (flwr)** framework
+- Uses a **ResNet-18** backbone pre-trained on ImageNet, fine-tuned for binary TB classification
+- Applies **differentially private training** (Opacus) at the client level
+- Benchmarks federated models against a **centralised baseline**
+- Evaluates performance rigorously with AUC-ROC, sensitivity, specificity, and bootstrap confidence intervals
 
-The report is organised around three practical questions:
-- Dataset structure and exploratory analysis
-- Centralised versus federated model performance
-- Error analysis, interpretability, and privacy-utility trade-offs
+---
+
+## Research Question
+
+> Can a differentially-private federated learning system trained across simulated Nigerian teaching hospital sites achieve TB detection performance statistically comparable to a centralised training baseline, while preserving patient privacy and supporting cross-site generalisation?
+
+---
+
+## Hypothesis
+
+A federated ResNet-18 model trained with FedAvg and (ε, δ)-differential privacy will achieve:
+- AUC-ROC ≥ 0.85 on the held-out test set
+- Sensitivity ≥ 0.80 at clinical operating threshold
+- AUC-ROC within 0.05 of the centralised baseline (non-inferiority margin)
+
+*These thresholds are project benchmarks, not fabricated results. Actual values depend on running the full pipeline.*
 
 ---
 
@@ -104,7 +122,34 @@ The report is organised around three practical questions:
 
 ## 3. Methods
 
-### 3.1 Data Preparation
+### 3.1 Overview
+
+Multi-site CXRs (simulated Nigerian hospital sites)
+        │
+        ▼
+┌───────────────────────────────────────┐
+│  Per-client local training            │
+│  ResNet-18 + DP-SGD (Opacus)         │
+│  Privacy budget: ε ≤ 8, δ = 1e-5     │
+└───────────────────────────────────────┘
+        │   gradient aggregation (no raw data)
+        ▼
+┌───────────────────────────────────────┐
+│  FedAvg Server (Flower framework)     │
+│  Rounds: 50  │  Min clients: 3        │
+└───────────────────────────────────────┘
+        │
+        ▼
+┌───────────────────────────────────────┐
+│  Global model evaluation              │
+│  AUC, Sensitivity, Specificity        │
+│  Bootstrap CI, McNemar test           │
+└───────────────────────────────────────┘
+        │
+        ▼
+   Centralised baseline comparison
+
+### 3.2 Data Preparation
 
 - Cleaned the dataset to 800 usable images.
 - Resized all images to 224 x 224.
@@ -112,20 +157,20 @@ The report is organised around three practical questions:
 - Applied standard normalisation and augmentation.
 - Split the data into train, validation, and test sets with a held-out test set.
 
-### 3.2 Federated Learning
+### 3.3 Federated Learning
 
 - Framework: Flower
 - Strategy: FedAvg
 - Site setup: 5 simulated teaching hospitals
 - Backbone: ImageNet-pretrained ResNet-18
 
-### 3.3 Differential Privacy
+### 3.4 Differential Privacy
 
 - Library: Opacus
 - Privacy target in the report: (epsilon = 8, delta = 1e-5)
 - BatchNorm layers were replaced with GroupNorm for DP compatibility
 
-### 3.4 Evaluation
+### 3.5 Evaluation
 
 - AUC-ROC
 - AUC-PRC
@@ -251,18 +296,74 @@ conda activate fedtb_nigeria
 
 ```text
 week4_project/
-|-- app_or_demo/         # Optional Gradio demo
-|-- configs/             # Project configuration
-|-- notebooks/           # Ordered analysis notebooks
-|-- paper_or_report/     # Full report sources, figures, and tables
-|-- scripts/             # Download and pipeline scripts
-|-- src/                 # Reusable project code
-|-- tests/               # Automated tests
-|-- environment.yml
-|-- Makefile
-|-- pyproject.toml
-|-- requirements.txt
-`-- README.md
+├── README.md
+├── LICENSE
+├── CITATION.cff
+├── requirements.txt
+├── environment.yml
+├── pyproject.toml
+├── Makefile
+├── .gitignore
+├── configs/
+│   └── config.yaml                  # All hyperparameters and paths
+├── data/
+│   ├── raw/                         # Downloaded datasets (not committed to git)
+│   ├── interim/                     # Cleaned / re-indexed
+│   ├── processed/                   # Normalised, split, ready for training
+│   ├── external/                    # Supplementary data
+│   └── mock/                        # Synthetic mini-dataset for tests
+├── notebooks/
+│   ├── 02_data_loading_and_first_inspection.ipynb
+│   ├── 03_data_cleaning_and_quality_checks.ipynb
+│   ├── 04_exploratory_data_analysis.ipynb
+│   ├── 05_preprocessing_and_augmentation.ipynb
+│   ├── 06_federated_site_simulation_and_splits.ipynb
+│   ├── 07_centralised_baseline_resnet.ipynb
+│   ├── 08_federated_learning_with_flower.ipynb
+│   ├── 09_differential_privacy_with_opacus.ipynb
+│   ├── 10_federated_dp_combined_training.ipynb
+│   ├── 11_model_evaluation_and_statistical_comparison.ipynb
+│   ├── 12_error_analysis_and_interpretability.ipynb
+│   ├── 13_robustness_checks_and_ablations.ipynb
+│   ├── 14_fairness_bias_and_ethics_checks.ipynb
+│   ├── 15_figures_and_tables.ipynb
+│   └── 16_gradio_demo.ipynb
+├── src/
+│   ├── __init__.py
+│   ├── config.py                    # Config loader
+│   ├── data_utils.py                # Image loading, dataset classes
+│   ├── model.py                     # ResNet-18 builder
+│   ├── fl_client.py                 # Flower client definition
+│   ├── fl_server.py                 # Flower server / strategy
+│   ├── dp_utils.py                  # Opacus DP wrappers
+│   ├── metrics.py                   # AUC, sensitivity, bootstrap CI
+│   ├── visualization.py             # Publication-quality plot helpers
+│   └── paths.py                     # Centralised path management
+├── scripts/
+│   ├── download_data.py             # Automated dataset download
+│   ├── run_centralised.py           # Train centralised baseline
+│   ├── run_federated.py             # Run FL simulation
+│   └── run_all.py                   # End-to-end pipeline
+├── tests/
+│   ├── test_config.py
+│   ├── test_data_utils.py
+│   ├── test_model.py
+│   ├── test_metrics.py
+│   ├── test_fl_client.py
+│   └── test_dp_utils.py
+├── models/
+│   ├── centralised/                 # Saved centralised model weights
+│   └── federated/                   # Saved FL model rounds
+├── paper_or_report/
+│   ├── report.md
+│   ├── references.bib
+│   ├── figures/
+│   ├── tables/
+│   ├── model_card.md
+│   ├── datasheet.md
+│   └── limitations.md
+└── app_or_demo/
+    └── gradio_app.py
 ```
 
 ---
@@ -280,3 +381,16 @@ The main publication figures used in the report are stored here:
 - [GradCAM examples](paper_or_report/figures/gradcam_examples.png)
 
 For the full technical write-up, see the PDF reports listed above.
+
+## Citation
+
+If you use this project, please cite:
+
+```
+@software{fedtb_nigeria_2026,
+  author = {[Your Name]},
+  title  = {FedTB-Nigeria: Federated Learning for TB Diagnosis from Chest X-Rays},
+  year   = {2026},
+  url    = {https://github.com/peter-adepoju/decodelabs_internship/week4_project}
+}
+```
